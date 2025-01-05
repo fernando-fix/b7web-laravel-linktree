@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -19,7 +20,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
+        'slug',
         'email',
+        'image',
         'password',
     ];
 
@@ -44,5 +48,32 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public static function search($filter = [])
+    {
+        return User::where(function ($query) use ($filter) {
+            if (isset($filter['name']))
+                $query->where('name', 'like', "%{$filter['name']}%");
+        });
+    }
+
+    /**
+     * Bootstrap any model services or events.
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function ($user) {
+            if (empty($user->slug) && !empty($user->username)) {
+                $user->slug = Str::slug($user->username, '-'); // Gera o slug do username
+            }
+        });
+    }
+
+    public function links()
+    {
+        return $this->hasMany(Link::class);
     }
 }

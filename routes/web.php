@@ -16,6 +16,7 @@ Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('logout');
 Route::post('logout/{id}', [AuthController::class, 'destroy'])->name('logout');
 Route::resource('users', UserController::class);
+Route::get('profile/{slug}', [UserController::class, 'show'])->name('profile');
 
 Route::group(
     ['middleware' => 'auth'],

@@ -1,0 +1,211 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    width: 100vw;
+}
+
+.container-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    width: 250px;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &:hover {
+        width: 250px;
+    }
+
+    &.retracted {
+        width: 70px;
+
+        .profile-info {
+
+            .profile-img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .logout-btn {
+                font-size: 20px;
+                padding: 5px 10px;
+            }
+        }
+
+        .text {
+            display: none;
+        }
+
+        .icon {
+            margin-right: 0;
+            text-align: center;
+        }
+
+        .chevron {
+            display: none;
+        }
+    }
+
+    .toggle-btn {
+        background: #444;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    ul {
+        list-style: none;
+        flex-grow: 1;
+        padding-left: 0px !important;
+    }
+
+    li {
+        position: relative;
+    }
+
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        background-color: #444;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        color: #fff;
+        text-decoration: none;
+
+        &.active {
+            background-color: #555;
+
+            a {
+                color: #fff;
+            }
+        }
+
+        &:hover {
+            background: #555;
+        }
+
+        .chevron {
+            transform: rotate(0deg);
+            transition: transform 0.3s ease;
+        }
+
+        &.open .chevron {
+            transform: rotate(90deg);
+        }
+    }
+
+    .submenu {
+        overflow: hidden;
+        max-height: 0;
+        background-color: transparent;
+        margin-top: 5px;
+        padding-left: 10px;
+        border-radius: 5px;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+
+        &.open {
+            max-height: 300px;
+            padding: 5px 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            margin-bottom: 5px;
+            background: #444;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+
+            &:hover {
+                background: #555;
+
+                a {
+                    color: #fff;
+                }
+            }
+
+            &.active {
+                background-color: #555;
+
+                a {
+                    color: #fff;
+                }
+            }
+
+            a {
+                width: 100%;
+                text-decoration: none;
+                color: #999;
+            }
+        }
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+
+        .profile-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .name {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #d32f2f;
+            }
+        }
+    }
+}
+
+.content {
+    padding: 10px;
+}
