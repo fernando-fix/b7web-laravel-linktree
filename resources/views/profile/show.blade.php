@@ -31,7 +31,8 @@
             </div>
 
             <div class="header-logo">
-                <img src="https://placehold.co/100x100" width="100" height="100" alt="main logo">
+                <img src="{{ $user->image ? Storage::url($user->image) : 'https://placehold.co/100x100' }}"
+                    width="100" height="100" alt="main logo">
             </div>
 
             <div class="header-title">
@@ -46,8 +47,8 @@
                 <ul class="links-list">
                     @forelse ($user->links as $link)
                         <li>
-                            <a href="{{ $link->url }}" style="background-color:#161818; color: #ffffff"
-                                target="_blank">
+                            <a href="{{ $link->url }}" class="click-register" data-link-id="{{ $link->id }}"
+                                style="background-color:#161818; color: #ffffff" target="_blank">
                                 <div class="image" style="background-color: transparent;">
                                     <img src="{{ asset('assets/img/facebook.svg') }}" alt="logo" height="40"
                                         width="40">
@@ -68,9 +69,32 @@
     </main>
 
     <script src="{{ asset('assets/js/bootstrap/bootstrap@5.2.3.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery/jquery-3.7.1.slim.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
+    <script>
+        $(function() {
+            $('.click-register').on('click', function() {
+                const link_id = $(this).data('link-id');
+                const url = $(this).attr('href');
+
+                $.ajax({
+                    url: `{{ route('click.store', ':link_id') }}`.replace(':link_id', link_id),
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        ip: '{{ request()->ip() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        window.open(url, '_blank');
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
 </body>
 
 </html>

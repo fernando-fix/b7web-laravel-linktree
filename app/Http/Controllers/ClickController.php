@@ -26,9 +26,17 @@ class ClickController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $link_id)
     {
-        //
+        $data = $request->except('_token');
+
+        $data['link_id'] = $link_id;
+        $data['date'] = date('Y-m-d');
+        $data['ip'] = $request->ip;
+
+        Click::create($data);
+
+        return $data;
     }
 
     /**

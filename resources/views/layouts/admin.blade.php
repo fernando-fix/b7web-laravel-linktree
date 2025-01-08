@@ -21,7 +21,8 @@
 
             <!-- Parte do perfil (embaixo do menu) -->
             <div class="profile-info">
-                <img src="https://i.pravatar.cc/60" alt="Foto de Perfil" class="profile-img">
+                <img src="{{ Auth::user()->image ? Storage::url(Auth::user()->image) : 'https://placehold.co/60x60' }}"
+                    alt="Foto de Perfil" class="profile-img">
                 <div class="name">{{ explode(' ', auth()->user()->name)[0] ?? 'N/A' }}</div>
                 <form action="{{ route('logout', auth()->user()->id) }}" method="POST">
                     @csrf

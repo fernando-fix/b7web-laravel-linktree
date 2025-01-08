@@ -20,15 +20,15 @@
         {{-- Coluna 1 --}}
         <div class="col-lg-6">
             <div class="card">
-                <div class="card-header">Links Mais Visitados</div>
+                <div class="card-header">Links mais clicados</div>
                 <div class="card-body" style="max-height: 300px; overflow-y: auto">
                     <ul class="list-group">
-                        @for ($i = 0; $i < 5; $i++)
+                        @foreach ($links as $link)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Link {{ $i + 1 }}
-                                <span class="badge bg-primary rounded-pill">{{ rand(100, 500) }}</span>
+                                {{ $link->title }}
+                                <span class="badge bg-primary rounded-pill">{{ sizeof($link->clicks) }}</span>
                             </li>
-                        @endfor
+                        @endforeach
                     </ul>
                 </div>
             </div>

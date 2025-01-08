@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -50,12 +51,16 @@ class UserController extends Controller
         $user = User::find($user->id);
 
         if ($request->password || $request->confirm_password) {
-            // $request->validate([
-            //     'password' => 'required|confirmed',
-            // ]);
 
             $user->update([
                 'password' => bcrypt($data['password']),
+            ]);
+        }
+
+        if ($request->file('image')) {
+            Storage::disk('public')->delete($user->image);
+            $user->update([
+                'image' => $request->file('image')->store('images', 'public'),
             ]);
         }
 

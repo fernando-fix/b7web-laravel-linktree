@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class DashboardController extends Controller
 {
@@ -25,6 +27,14 @@ class DashboardController extends Controller
             'data' => $data->pluck('views')->toArray(),
         ];
 
-        return view('dashboard', compact('chartData'));
+        $user = User::find(Auth::user()->id);
+        $links = $user->links()->orderByDesc(
+            FacadesDB::raw('(
+                SELECT COUNT(*) FROM clicks
+                WHERE clicks.link_id = links.id
+            )')
+        )->get();
+
+        return view('dashboard', compact('chartData', 'user', 'links'));
     }
 }
