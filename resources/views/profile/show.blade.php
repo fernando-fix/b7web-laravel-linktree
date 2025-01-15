@@ -15,20 +15,34 @@
 <body style="background: linear-gradient(90deg, black, darkblue);">
     <header>
         <div class="container">
-            <div class="button-area">
-                <div class="dropdown">
-                    <div class="button dropdown-toggle" type="button" style="background-color:#161818; color: #ffffff"
-                        data-bs-toggle="dropdown" aria-expanded="false"></div>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ route('login') }}" class="dropdown-item">Login</a>
-                        </li>
-                        <li>
-                            <a href="{{ route('register') }}" class="dropdown-item">Cadastro</a>
-                        </li>
-                    </ul>
+            @auth
+                <div class="button-area">
+                    <div class="dropdown">
+                        <div class="button dropdown-toggle" type="button" style="background-color:#161818; color: #ffffff"
+                            data-bs-toggle="dropdown" aria-expanded="false"></div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ route('dashboard') }}" class="dropdown-item">Meu Perfil</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="button-area">
+                    <div class="dropdown">
+                        <div class="button dropdown-toggle" type="button" style="background-color:#161818; color: #ffffff"
+                            data-bs-toggle="dropdown" aria-expanded="false"></div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ route('login') }}" class="dropdown-item">Login</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('register') }}" class="dropdown-item">Cadastro</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            @endauth
 
             <div class="header-logo">
                 <img src="{{ $user->image ? Storage::url($user->image) : 'https://placehold.co/100x100' }}"
