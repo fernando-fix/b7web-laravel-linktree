@@ -12,6 +12,23 @@
     @enderror
 </div>
 
+{{-- NomeDeUsuário --}}
+<div class="form-group mb-3 col-md-6">
+    <label for="username">Nome de Usuário</label>
+    <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username"
+        value="{{ old('username', $user->username ?? null) }}" disabled>
+</div>
+
+{{-- Meu link --}}
+<div class="form-group mb-3 col-md-6">
+    <div class="input-group ">
+        <input type="text" class="form-control" value="{{ route('profile', $user->slug) }}" disabled id="link">
+        <div class="input-group-text bg-light" role="button" id="copyLink">
+            <i class="far fa-copy"></i>
+        </div>
+    </div>
+</div>
+
 {{-- Nome --}}
 <div class="form-group mb-3 col-md-6">
     <label for="name">Nome</label>
@@ -62,6 +79,22 @@
                 };
                 reader.readAsDataURL(file);
             }, 1000);
+        });
+
+        let copyLink = document.getElementById('copyLink');
+        copyLink.addEventListener('click', () => {
+            let link = document.getElementById('link');
+            navigator.clipboard.writeText(link.value).then(function() {
+                console.log('Link copiado com sucesso!');
+            }, function(err) {
+                console.error('Erro ao copiar o link:', err);
+            });
+            Swal.fire({
+                icon: "success",
+                title: "Link copiado!",
+                showConfirmButton: false,
+                timer: 1500
+            });
         });
     </script>
 @endpush
