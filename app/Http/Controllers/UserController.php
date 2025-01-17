@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Models\Theme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -42,7 +43,8 @@ class UserController extends Controller
         if (!$user || $user->id != Auth::user()->id) {
             abort(403);
         }
-        return view('profile.edit', compact('user'));
+        $themes = Theme::get();
+        return view('profile.edit', compact('user', 'themes'));
     }
 
     public function update(UserRequest $request, User $user)
@@ -66,6 +68,7 @@ class UserController extends Controller
 
         $user->update([
             'name' => $data['name'],
+            'theme_id' => $data['theme_id'],
         ]);
 
         alert()->success('Perfil atualizado com sucesso!');

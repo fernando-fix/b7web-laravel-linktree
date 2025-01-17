@@ -24,6 +24,7 @@ class User extends Authenticatable
         'slug',
         'email',
         'image',
+        'theme_id',
         'password',
     ];
 
@@ -75,5 +76,10 @@ class User extends Authenticatable
     public function links()
     {
         return $this->hasMany(Link::class);
+    }
+
+    public function theme()
+    {
+        return $this->belongsTo(Theme::class);
     }
 }
