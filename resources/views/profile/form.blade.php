@@ -90,27 +90,34 @@
     <div class="col-lg-6 d-flex justify-content-center align-items-center">
         <div class="phone"
             style="
-            width: calc(100% * 0.37);
-            height: 615px;
-            background-image: url({{ asset('assets/img/phone.webp') }});
-            background-size: cover;
-            background-position: center;
-            padding: 10px;
-            position: relative;
+            background-image: linear-gradient(
+                {{ $user->theme->angle }}deg,
+                {{ $user->theme->bg_color1 }},
+                {{ $user->theme->bg_color2 }}
+            );
             ">
             <div class="phone-inner"
                 style="
-                background-image: linear-gradient({{ $user->theme->angle }}deg, {{ $user->theme->bg_color1 }}, {{ $user->theme->bg_color2 }});
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                color: #000;
-                font-size: 18px;
+                background-image: url({{ asset('assets/img/phone.webp') }});
+                color: {{ $user->theme->font_color }};
                 ">
-                Conteúdo
+                <ul class="links-list">
+                    <div class="header-logo text-center">
+                        <img src="{{ $user->image ? Storage::url($user->image) : 'https://placehold.co/100x100' }}"
+                            width="100" height="100" alt="main logo">
+                    </div>
+                    @foreach ($user->links as $key => $link)
+                        <li>
+                            <a href="#" style="background-color:#161818; color: #ffffff">
+                                <div class="image" style="background-color: transparent;">
+                                    <img src="{{ asset('assets/img/facebook.svg') }}" alt="logo" height="40"
+                                        width="40">
+                                </div>
+                                <div class="description">{{ $link->title }}</div>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>
@@ -151,4 +158,106 @@
             });
         });
     </script>
+@endpush
+
+@push('styles')
+    <style>
+        .phone {
+            padding: 10px;
+            position: relative;
+            width: 350px;
+            height: 730px;
+        }
+
+        .phone-inner {
+            height: 100%;
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 18px;
+            padding-top: 12%;
+            padding-left: 4%;
+            padding-right: 4%;
+            padding-bottom: 20%;
+        }
+
+        .header-logo img{
+            border-radius: 50%;
+        }
+
+        .links-list {
+            position: relative;
+            margin-top: 40px;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-bottom: 32px;
+            padding-left: 0;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .links-list::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        .links-list::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+        }
+
+        .links-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .links-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .links-list li a {
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-left: 10px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            padding-left: 20px;
+            padding-right: 10px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .links-list li a:hover {
+            transform: scale(1.05);
+        }
+
+        .links-list li a .image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .links-list li a .image img {
+            transition: all 0.3s ease;
+        }
+
+        .links-list li a .description {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+    </style>
 @endpush
