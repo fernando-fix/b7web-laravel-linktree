@@ -5,6 +5,7 @@ use App\Http\Controllers\ClickController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Autnticação e registro
 Route::get('register', [UserController::class, 'create'])->name('register');
+Route::post('register', [UserController::class, 'store'])->name('register');
 Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('logout');
 Route::post('logout/{id}', [AuthController::class, 'destroy'])->name('logout');
@@ -27,6 +29,8 @@ Route::group(
     function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('links', LinkController::class);
+        Route::resource('socials', SocialController::class);
+        Route::post('links-reorder', [LinkController::class, 'reorder'])->name('links.reorder');
     }
 );
 

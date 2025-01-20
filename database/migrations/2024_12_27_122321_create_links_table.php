@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('url');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('social_id')->nullable();
+            $table->integer('order')->default(9999);
+            $table->boolean('active')->default(true);
             $table->timestamps();
 
             // Foreign key constraint

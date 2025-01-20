@@ -15,17 +15,19 @@ class ThemeSeeder extends Seeder
     {
         $themes = [
             [
-                'title' => 'Dark',
+                'title' => 'Default',
+                'btn_color' => '#161818',
                 'text_color' => '#ffffff',
                 'bg_color1' => '#000000',
-                'bg_color2' => '#000000',
+                'bg_color2' => '#00008b',
                 'angle' => '90',
             ],
             [
-                'title' => 'Light',
-                'text_color' => '#000000',
-                'bg_color1' => '#ffffff',
-                'bg_color2' => '#ffffff',
+                'title' => 'Dark',
+                'btn_color' => '#161818',
+                'text_color' => '#ffffff',
+                'bg_color1' => '#222222',
+                'bg_color2' => '#222222',
                 'angle' => '90',
             ]
         ];

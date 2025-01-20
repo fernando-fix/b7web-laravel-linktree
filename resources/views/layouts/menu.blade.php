@@ -24,6 +24,20 @@ $menus = [
             ],
         ],
     ],
+    [
+        'icon' => '👥',
+        'text' => 'Administrador',
+        'url' => null,
+        'open_menu_routes' => ['socials.index', 'socials.create', 'socials.edit'],
+        'permission' => 'admin',
+        'submenu' => [
+            [
+                'text' => 'Redes sociais',
+                'url' => route('socials.index', Auth::user()->id),
+                'active' => ['socials.index', 'socials.create', 'socials.edit'],
+            ],
+        ],
+    ],
 ];
 ?>
 
@@ -32,6 +46,9 @@ $menus = [
     @foreach ($menus as $menu)
         <li>
             @if (isset($menu['submenu']) && count($menu['submenu']) > 0)
+                @if (isset($menu['permission']) && $menu['permission'] == 'admin' && !Auth::user()->is_admin)
+                    @continue
+                @endif
                 <div class="menu-item
                     @if (request()->routeIs($menu['open_menu_routes'] ?? [])) open @endif
                     @if (in_array(request()->route()->getName(), $menu['open_menu_routes'] ?? [])) active @endif"
@@ -58,3 +75,4 @@ $menus = [
         </li>
     @endforeach
 </ul>
+

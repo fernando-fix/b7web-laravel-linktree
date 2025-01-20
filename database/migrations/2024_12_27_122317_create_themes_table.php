@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('themes', function (Blueprint $table) {
             $table->id();
             $table->string('title', 20);
+            $table->string('btn_color', 7);
             $table->string('text_color', 7);
             $table->string('bg_color1', 7);
             $table->string('bg_color2', 7);

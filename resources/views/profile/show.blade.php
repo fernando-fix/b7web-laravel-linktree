@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
 </head>
 
-<body style="background: linear-gradient(90deg, black, darkblue);">
+<body
+    style="background: linear-gradient({{ $user->theme->angle }}deg, {{ $user->theme->bg_color1 }}, {{ $user->theme->bg_color2 }});">
     <header>
         <div class="container">
             @auth
                 <div class="button-area">
                     <div class="dropdown">
-                        <div class="button dropdown-toggle" type="button" style="background-color:#161818; color: #ffffff"
+                        <div class="button dropdown-toggle" type="button"
+                            style="background-color:{{ $user->theme->btn_color }}; color: {{ $user->theme->text_color }}"
                             data-bs-toggle="dropdown" aria-expanded="false"></div>
                         <ul class="dropdown-menu">
                             <li>
@@ -30,7 +32,8 @@
             @else
                 <div class="button-area">
                     <div class="dropdown">
-                        <div class="button dropdown-toggle" type="button" style="background-color:#161818; color: #ffffff"
+                        <div class="button dropdown-toggle" type="button"
+                            style="background-color:{{ $user->theme->btn_color }}; color: {{ $user->theme->text_color }}"
                             data-bs-toggle="dropdown" aria-expanded="false"></div>
                         <ul class="dropdown-menu">
                             <li>
@@ -50,7 +53,7 @@
             </div>
 
             <div class="header-title">
-                <h1 style="color: #ffffff">{{ $user->name }}</h1>
+                <h1 style="color: {{ $user->theme->text_color }}">{{ $user->name }}</h1>
             </div>
         </div>
     </header>
@@ -59,13 +62,14 @@
         <section class="main-section">
             <div class="container">
                 <ul class="links-list">
-                    @forelse ($user->links as $link)
+                    @forelse ($links as $link)
                         <li>
                             <a href="{{ $link->url }}" class="click-register" data-link-id="{{ $link->id }}"
-                                style="background-color:#161818; color: #ffffff" target="_blank">
+                                style="background-color:{{ $user->theme->btn_color }}; color: {{ $user->theme->text_color }}"
+                                target="_blank">
                                 <div class="image" style="background-color: transparent;">
-                                    <img src="{{ asset('assets/img/facebook.svg') }}" alt="logo" height="40"
-                                        width="40">
+                                    <img src="{{ $link->social->image ? Storage::url($link->social->image) : 'https://placehold.co/40x40' }}"
+                                        alt="logo" height="40" width="40">
                                 </div>
                                 <div class="description" title="{{ $link->description }}">{{ $link->title }}</div>
                             </a>

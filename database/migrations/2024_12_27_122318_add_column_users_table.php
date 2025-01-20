@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('theme_id')->nullable()->after('image');
+            $table->unsignedBigInteger('theme_id')->default('1')->after('image');
 
             // Foreign key constraint
             $table->foreign('theme_id')->references('id')->on('themes');

@@ -13,6 +13,8 @@ class Link extends Model
         'title',
         'description',
         'social_id',
+        'order',
+        'active',
         'user_id',
     ];
 
@@ -24,5 +26,10 @@ class Link extends Model
     public function clicks()
     {
         return $this->hasMany(Click::class);
+    }
+
+    public function social()
+    {
+        return $this->belongsTo(Social::class);
     }
 }

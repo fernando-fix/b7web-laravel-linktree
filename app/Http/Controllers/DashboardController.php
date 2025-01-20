@@ -3,28 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\View;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Exemplo de dados fictícios dos últimos 7 dias
-        $data = collect([
-            ['date' => Carbon::today()->subDays(6), 'views' => 150],
-            ['date' => Carbon::today()->subDays(5), 'views' => 200],
-            ['date' => Carbon::today()->subDays(4), 'views' => 180],
-            ['date' => Carbon::today()->subDays(3), 'views' => 220],
-            ['date' => Carbon::today()->subDays(2), 'views' => 240],
-            ['date' => Carbon::today()->subDay(), 'views' => 300],
-            ['date' => Carbon::today(), 'views' => 400],
-        ]);
+        $date = Carbon::today();
+
+        if ($request->date) {
+            $date = Carbon::parse($request->date);
+        }
+
+        $data = [
+            ['date' => $date->copy()->subDays(6)],
+            ['date' => $date->copy()->subDays(5)],
+            ['date' => $date->copy()->subDays(4)],
+            ['date' => $date->copy()->subDays(3)],
+            ['date' => $date->copy()->subDays(2)],
+            ['date' => $date->copy()->subDays(1)],
+            ['date' => $date->copy()->subDays(0)],
+        ];
+
+        foreach ($data as $key => $value) {
+            $data[$key]['views'] = View::whereDate('date', $value['date']->format('Y-m-d'))->count();
+        }
 
         $chartData = [
-            'labels' => $data->pluck('date')->map(fn($date) => $date->format('d/m'))->toArray(),
-            'data' => $data->pluck('views')->toArray(),
+            'labels' => collect($data)->pluck('date')->map(fn($date) => $date->format('d/m'))->toArray(),
+            'data' => collect($data)->pluck('views')->toArray(),
         ];
 
         $user = User::find(Auth::user()->id);

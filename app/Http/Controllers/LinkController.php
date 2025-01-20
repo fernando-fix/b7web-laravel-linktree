@@ -14,7 +14,7 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links = Link::get();
+        $links = Link::orderBy('order')->get();
         return view('links.index', compact('links'));
     }
 
@@ -90,5 +90,14 @@ class LinkController extends Controller
             alert()->error('Erro ao excluir link!');
         }
         return redirect()->route('links.index');
+    }
+
+    public function reorder(Request $request)
+    {
+        $links = $request->get('order');
+
+        foreach ($links as $key => $link_id) {
+            Link::where('id', $link_id)->update(['order' => $key]);
+        }
     }
 }

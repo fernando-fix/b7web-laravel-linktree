@@ -36,13 +36,28 @@
         <select class="form-control @error('social_id') is-invalid @enderror" id="social_id" name="social_id">
             <option value="">Selecione uma rede social</option>
             @foreach ($socials as $social)
-                <option value="{{ $social->id }}">{{ $social->name }}</option>
+                <option {{ old('social_id', $link->social_id ?? null) == $social->id ? 'selected' : '' }}
+                    value="{{ $social->id }}">{{ $social->title }}</option>
             @endforeach
         </select>
         @error('social_id')
             <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
+
+    {{-- Ativo --}}
+    @isset($link)
+        <div class="form-group mb-3 col-md-6">
+            <label for="active">Ativo</label>
+            <select class="form-control @error('active') is-invalid @enderror" id="active" name="active">
+                <option {{ old('active', $link->active ?? null) == 0 ? 'selected' : '' }} value="0">Não</option>
+                <option {{ old('active', $link->active ?? null) == 1 ? 'selected' : '' }} value="1">Sim</option>
+            </select>
+            @error('active')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+    @endisset
 
     {{-- Botão salvar --}}
     <div class="form-group col-md-12">

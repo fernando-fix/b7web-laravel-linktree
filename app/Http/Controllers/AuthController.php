@@ -34,11 +34,11 @@ class AuthController extends Controller
 
     public function destroy($id)
     {
-        $profile = Auth::user();
+        $user = Auth::user();
         Auth::logout();
-        // if ($profile) {
-        //     return redirect()->route('profile', $profile);
-        // }
+        if ($user) {
+            return redirect()->route('profile', $user->slug);
+        }
         return redirect()->route('home');
     }
 }

@@ -108,9 +108,9 @@
                     </div>
                     @foreach ($user->links as $key => $link)
                         <li>
-                            <a href="#" style="background-color:#161818; color: #ffffff">
+                            <a href="#" style="background-color:{{ $user->theme->btn_color }}; color: {{ $user->theme->text_color }}">
                                 <div class="image" style="background-color: transparent;">
-                                    <img src="{{ asset('assets/img/facebook.svg') }}" alt="logo" height="40"
+                                    <img src="{{ $link->social->image ? Storage::url($link->social->image) : 'https://placehold.co/40x40' }}" alt="logo" height="40"
                                         width="40">
                                 </div>
                                 <div class="description">{{ $link->title }}</div>

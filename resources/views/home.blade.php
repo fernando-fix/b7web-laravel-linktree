@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
 </head>
 
-<body style="background: linear-gradient(90deg, black, darkblue);">
+<body style="background: linear-gradient(90deg, #000000, #00008b);">
     <header>
         <div class="container">
             <div class="button-area">

@@ -29,7 +29,7 @@
     <main>
         <section class="main-section">
             <div class="container">
-                <form class="mt-3 text-light" action="{{ route('users.store') }}" method="POST">
+                <form class="mt-3 text-light" action="{{ route('register') }}" method="POST">
                     @csrf
                     @method('POST')
                     @include('register.form')

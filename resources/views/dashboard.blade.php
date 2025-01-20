@@ -9,7 +9,14 @@
     <div class="row">
         <div class="col">
             <div class="card">
-                <div class="card-header">Visitas ao perfil</div>
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <span> Visitas ao perfil</span>
+
+                    <form action="" method="get" class="d-inline">
+                        <input type="date" class="form-control" name="date" id="date"
+                            value="{{ request()->query('date') ?? date('Y-m-d') }}">
+                    </form>
+                </div>
                 <div class="card-body">
                     <canvas id="views" style="max-width: calc(100%); height: 300px"></canvas>
                 </div>
@@ -82,5 +89,12 @@
                 },
             }
         });
+    </script>
+
+    <script>
+        let input_date = document.querySelector('#date');
+        input_date.addEventListener('change', () => {
+            window.location.href = '{{ route('dashboard') }}?date=' + input_date.value;
+        })
     </script>
 @endpush
